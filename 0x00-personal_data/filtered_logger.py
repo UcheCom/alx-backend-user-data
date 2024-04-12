@@ -6,7 +6,7 @@ import re
 from typing import List
 
 
-PII_FIELDS = ("name", "email", "password", "phone", "ssn")
+# PII_FIELDS = ("name", "email", "password", "phone", "ssn")
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -34,6 +34,7 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
          """ This filters value in incomming log records """
-         record.msg = filter_datum(self.fields, self.REDACTION,
-                                  record.getMessage(), self.SEPARATOR)
-        return super(RedactingFormatter, self).format(record)
+         message = super(RedactingFormatter, self).format(record)
+         redacted = filter_datum(self.fields, self.REDACTION,
+                                  message, self.SEPARATOR)
+         return redacted
