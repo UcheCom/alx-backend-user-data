@@ -3,6 +3,8 @@
 
 import logging
 import re
+from os import environ
+import mysql.connector
 from typing import List
 
 
@@ -53,6 +55,33 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(formatter)
     log.addHandler(handler)
     return log
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """This returns a connector to the database"""
+    db_name = environ.get('PERSONAL_DATA_DB_NAME')
+    host = environ.get('PERSONAL_DATA_DB_HOST', 'localhost')
+    username =  environ.get('PERSONAL_DATA_DB_USERNAME', 'root')
+    passwd = environ.get('PERSONAL_DATA_DB_PASSWORD', '')
+    conn = mysql.connector.connect(db=db_name,
+                                   password=passwd,
+                                   host=host,
+                                   user=username)
+    return conn
+
+
+def main():
+    """The main entry point"""
+    db = get_db()
+    logger = get_logger()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    fields = cursor.column_names
+    for row in cursor:
+        str_row = "".join("{}={}; ".format(k, v) for k, v in zip(fields, row))
+        logger.info(str_row.strip())
+    cursor.close()
+    db.close()
 
 
 if __name__ == '__main__':
