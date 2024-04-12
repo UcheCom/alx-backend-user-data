@@ -76,7 +76,7 @@ def main():
     logger = get_logger()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users;")
-    fields = cursor.column_names
+    fields = [desc[0] for desc in cursor.desciption]
     for row in cursor:
         str_row = "".join("{}={}; ".format(k, v) for k, v in zip(fields, row))
         logger.info(str_row.strip())
