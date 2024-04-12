@@ -2,13 +2,13 @@
 """ Encrypting passwords """
 
 import bcrypt
-from bcript import hashpw
+from bcrypt import hashpw
 
 
 def hash_password(password: str) -> bytes:
     """This returns a salted, hashed password"""
-    pwd = password.encode()
-    hashed = hashpw(pwd, bcrypt.gensalt())
+    pd = password.encode()
+    hashed = hashpw(pd, bcrypt.gensalt())
     return hashed
 
 
