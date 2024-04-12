@@ -40,7 +40,7 @@ class RedactingFormatter(logging.Formatter):
         return redacted
 
 
-    def get_logger() -> logging.Logger:
+def get_logger() -> logging.Logger:
     """This returns logging.Logger object"""
     log = logging.getLogger("user_data")
     log.setLevel(logging.INFO)
@@ -53,3 +53,7 @@ class RedactingFormatter(logging.Formatter):
     handler.setFormatter(formatter)
     log.addHandler(handler)
     return log
+
+
+if __name__ == '__main__':
+    main()
