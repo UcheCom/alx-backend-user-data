@@ -50,7 +50,7 @@ class BasicAuth(Auth):
         """
         if decoded_base64_authorization_header is None:
             return (None, None)
-        if not IsInstance(decoded_base64_authorization_header, str):
+        if not isinstance(decoded_base64_authorization_header, str):
             return (None, None)
         if ':' not in decoded_base64_authorization_header:
             return (None, None)
@@ -62,9 +62,9 @@ class BasicAuth(Auth):
     def user_object_from_credentials(self, user_email: str,
                                      user_pwd: str) -> TypeVar('User'):
         """Returns a User instance based on email and password"""
-        if user_email is None or not IsInstance(user_email, str):
+        if user_email is None or not isinstance(user_email, str):
             return None
-        if user_pwd is None or not IsInstance(user_pwd, str):
+        if user_pwd is None or not isinstance(user_pwd, str):
             return None
         try:
             users = User.search({"email": user_email})
