@@ -19,12 +19,12 @@ if os.getenv("AUTH_TYPE") == "auth":
 elif os.getenv("AUTH_TYPE") == "basic_auth":
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
-elif AUTH_TYPE == "session_exp_auth":
-    from api.v1.auth.session_exp_auth import SessionExpAuth
-    auth = SessionExpAuth()
-elif AUTH_TYPE == "session_db_auth":
-    from api.v1.auth.session_db_auth import SessionDBAuth
-    auth = SessionDBAuth()
+# elif AUTH_TYPE == "session_exp_auth":
+# from api.v1.auth.session_exp_auth import SessionExpAuth
+# auth = SessionExpAuth()
+# elif AUTH_TYPE == "session_db_auth":
+# from api.v1.auth.session_db_auth import SessionDBAuth
+# auth = SessionDBAuth()
 
 
 @app.errorhandler(401)
@@ -62,8 +62,6 @@ def before_request():
         if auth.require_auth(request.path, excluded):
             if auth.authorization_header(request) is None:
                 abort(401, description="Unauthorized")
-            if auth.current_user(request) is None:
-                abort(403, description="Forbidden")
             if auth.current_user(request) is None:
                 abort(403, description="Forbidden")
 
