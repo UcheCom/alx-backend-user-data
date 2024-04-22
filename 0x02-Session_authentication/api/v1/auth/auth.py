@@ -31,8 +31,7 @@ class Auth:
 
     def authorization_header(self, request=None) -> str:
         """ Method used to create the authentication header
-        Return:
-          - String
+        Return: String
         """
         if request is None:
             return None
@@ -46,9 +45,9 @@ class Auth:
         return None
 
     def session_cookie(self, request=None):
-        """Nethod returns a cookie value from a request
+        """Method returns a cookie value from a request
         """
-        if not request:
+        if request is None:
             return None
         sess_name = os.getenv("SESSION_NAME")
-        return request.cookies.get("_my_session_id")
+        return request.cookies.get(sess_name)
