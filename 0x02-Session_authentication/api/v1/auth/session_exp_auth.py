@@ -31,18 +31,15 @@ class SessionExpAuth(SessionAuth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """ Thsi returns the user_id based on the session_id"""
-        if session_id is None:
-            return None
-        sess_dict = self.user_id_by_session_id[session_id]
-        if sess_dict is None:
-            return None
-        if self.session_duration <= 0:
-            return sess_dict["user_id"]
-        if "craeted_at" not in sess_dict.keys():
-            return None
-        current_time = datetime.now()
-        time_span = timedelta(seconds=self.session_duration)
-        exp_time = sess_dict['created_at'] + time_span
-        if exp_time < current_time:
-            return None
-        return self.sess_dict["user_id"]  # self.sess_dict.get('user_id')
+        if session_id in self.user_id_by_session_id:
+            user_dict = self.user_id_by_session_id[session_id]
+            if self.session_duration <= 0:
+                return user_dict['user_id']
+            if 'created_at' not in user_dict:
+                return None
+            current_time = datetime.now()
+            time_span = timedelta(seconds=self.session_duration)
+            exp_time = user_dict['created_at'] + time_span
+            if exp_time < current_time:
+                return None
+            return user_dict['user_id']  # self.sess_dict.get('user_id')
