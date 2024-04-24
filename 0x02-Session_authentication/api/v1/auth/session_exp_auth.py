@@ -12,7 +12,7 @@ class SessionExpAuth(SessionAuth):
     def __init__(self):
         """init method"""
         if not os.getenv('SESSION_DURATION') or not \
-            int(os.getenv('SESSION_DURATION')):
+           int(os.getenv('SESSION_DURATION')):
             self.session_duration = 0
 
         self.session_duration = int(os.getenv('SESSION_DURATION'))
@@ -31,13 +31,13 @@ class SessionExpAuth(SessionAuth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """ Thsi returns the user_id based on the session_id"""
+        sess_dict = self.user_id_by_session_id[session_id]
         if session_id is None:
             return None
         if session_id not in self.user_id_by_session_id:
             return None
         if self.session_duration <= 0:
             return sess_dict['user_id']
-        sess_dict = self.user_id_by_session_id[session_id]
         if "craeted_at" not in sess_dict:
             return None
         current_time = datetime.now()
