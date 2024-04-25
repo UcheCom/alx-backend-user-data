@@ -36,3 +36,14 @@ class DB:
         self._session.add(user)
         self._session.commit()
         return user
+
+    def find_user_by(self, **kwargs) -> User:
+        """This finds a user by using key"""
+        users = self.session.query(User)
+        for k, v in kwargs.items():
+            if k not in User.__dict__:
+                raise InvalidRequestError
+        for u in users:
+            if getattr(u, k) == v:
+                return u
+        raise NoResultFound
