@@ -41,7 +41,7 @@ class DB:
 
     def find_user_by(self, **kwargs) -> User:
         """This finds a user by using key"""
-        users = self.session.query(User)
+        users = self._session.query(User)
         for k, v in kwargs.items():
             if k not in User.__dict__:
                 raise InvalidRequestError
