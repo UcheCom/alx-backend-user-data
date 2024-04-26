@@ -11,7 +11,7 @@ from sqlalchemy.orm.exc import NoResultFound
 def _hash_password(password: str) -> str:
     """ This returns a salted hash an input password
     """
-    return bcrypt.hashpw(password.encode('utf-8'), becrypt.gensalt())
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 
 def _generate_uuid() -> str:
